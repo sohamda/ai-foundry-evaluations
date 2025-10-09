@@ -4,12 +4,6 @@
   "parameters": {
     "projectName": {
       "value": "ai-foundry-eval"
-    },
-    "tags": {
-      "value": {
-        "Purpose": "AI Foundry Agents",
-        "Owner": "Development Team"
-      }
     }
   }
 }
