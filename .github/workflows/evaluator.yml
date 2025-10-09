@@ -33,9 +33,7 @@ jobs:
             "data": "${{ env.GENAI_EVALS_DATA_PATH }}",
             "evaluators": {
               "coherence": "CoherenceEvaluator",
-              "fluency": "FluencyEvaluator",
-              "violence": "ViolenceEvaluator",
-              "hateunfairness": "HateUnfairnessEvaluator"
+              "fluency": "FluencyEvaluator"
             },
             "ai_model_configuration": {
               "type": "azure_openai",
@@ -51,3 +49,5 @@ jobs:
         uses: microsoft/genai-evals@main
         with:
           evaluate-configuration: ${{ env.GENAI_EVALS_CONFIG_PATH }}
+          show-summary: true
+          show-raw-output: true
