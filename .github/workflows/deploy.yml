@@ -85,14 +85,13 @@ jobs:
           az group create --name ${{ env.RESOURCE_GROUP_NAME }} --location ${{ env.LOCATION }}
 
       - name: Deploy Bicep template
-        uses: azure/arm-deploy@v1
-        with:
-          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
-          resourceGroupName: ${{ env.RESOURCE_GROUP_NAME }}
-          template: infra/main.bicep
-          parameters: infra/main.parameters.json
-          deploymentName: ${{ env.DEPLOYMENT_NAME }}
-          failOnStdErr: false
+        run: |
+          az deployment group create \
+            --resource-group ${{ env.RESOURCE_GROUP_NAME }} \
+            --template-file infra/main.bicep \
+            --parameters infra/main.parameters.json \
+            --name ${{ env.DEPLOYMENT_NAME }} \
+            --verbose
 
   evaluate:
     name: Run AI Foundry Evaluations
