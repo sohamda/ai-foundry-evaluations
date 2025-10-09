@@ -97,10 +97,6 @@ jobs:
     name: Run AI Foundry Evaluations
     uses: ./.github/workflows/evaluator.yml
     needs: deploy
-    if: success() && (github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch')
-    with:
-      environment: 'main'
-      project-name: 'ai-foundry-eval'
     secrets: inherit
 
   post-deployment:
