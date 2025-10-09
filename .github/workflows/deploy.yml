@@ -70,11 +70,12 @@ jobs:
           azcliversion: latest
           inlineScript: |
             az account show
-            
+
       - name: Set deployment variables
         run: |
           echo "RESOURCE_GROUP_NAME=rg-ai-foundry-eval" >> $GITHUB_ENV
           echo "LOCATION=swedencentral" >> $GITHUB_ENV
+          echo "DEPLOYMENT_NAME=ai-foundry-deploy-$(date +%Y%m%d-%H%M%S)" >> $GITHUB_ENV
 
       - name: Create Resource Group
         run: |
@@ -90,6 +91,7 @@ jobs:
           resourceGroupName: ${{ env.RESOURCE_GROUP_NAME }}
           template: infra/main.bicep
           parameters: infra/main.parameters.json
+          deploymentName: ${{ env.DEPLOYMENT_NAME }}
 
   evaluate:
     name: Run AI Foundry Evaluations
