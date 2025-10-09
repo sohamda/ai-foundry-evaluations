@@ -4,15 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'infra/**'
-      - '.github/workflows/deploy.yml'
-  pull_request:
-    branches:
-      - main
-    paths:
-      - 'infra/**'
-      - '.github/workflows/deploy.yml'
   workflow_dispatch:
 
 permissions:
@@ -29,30 +20,30 @@ jobs:
     name: Validate Bicep Templates
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-      - name: Setup Azure CLI
-        uses: azure/setup-azure-cli@v1
-        with:
-          azcli-version: latest
+    - name: Azure Login
+      uses: azure/login@v2
+      with:
+        client-id: ${{ env.AZURE_CLIENT_ID }}
+        tenant-id: ${{ env.AZURE_TENANT_ID }}
+        subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Azure Login
-        uses: azure/login@v2
-        with:
-          client-id: ${{ env.AZURE_CLIENT_ID }}
-          tenant-id: ${{ env.AZURE_TENANT_ID }}
-          subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
+    - name: Setup Azure CLI
+      uses: azure/setup-azure-cli@v2
+      with:
+        azcli-version: latest
 
-      - name: Validate Bicep files
-        run: |
-          az bicep build --file infra/main.bicep
-          az bicep build --file infra/modules/model-deployment.bicep
+    - name: Validate Bicep files
+      run: |
+        az bicep build --file infra/main.bicep
+        az bicep build --file infra/modules/model-deployment.bicep
 
-      - name: Lint Bicep files
-        run: |
-          az bicep lint --file infra/main.bicep
-          az bicep lint --file infra/modules/model-deployment.bicep
+    - name: Lint Bicep files
+      run: |
+        az bicep lint --file infra/main.bicep
+        az bicep lint --file infra/modules/model-deployment.bicep
 
   deploy:
     name: Deploy to Azure
