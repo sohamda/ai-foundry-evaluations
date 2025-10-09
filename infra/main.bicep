@@ -2,6 +2,7 @@ targetScope = 'resourceGroup'
 
 // Parameters
 @description('The name of the Azure AI Foundry project')
+@minLength(3)
 param projectName string
 
 @description('Resource token for naming consistency')
