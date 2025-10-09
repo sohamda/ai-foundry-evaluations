@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     env: 
       GENAI_EVALS_CONFIG_PATH: ${{ github.workspace }}/evaluate-config.json 
-      GENAI_EVALS_DATA_PATH: ${{ github.workspace }}/.github/.test_files/eval-input.json
+      GENAI_EVALS_DATA_PATH: ${{ github.workspace }}/.github/.test_files/eval-input.jsonl
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
