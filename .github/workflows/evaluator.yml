@@ -2,24 +2,7 @@ name: AI Foundry Evaluator
 
 on:
   workflow_call:
-    inputs:
-      environment:
-        required: false
-        type: string
-        default: 'main'
-        description: 'Environment to run evaluations against'
-      project-name:
-        required: false
-        type: string
-        default: 'ai-foundry-eval'
-        description: 'AI Foundry project name'
-    outputs:
-      evaluation_status:
-        description: 'Status of the evaluation run'
-        value: ${{ jobs.evaluate.outputs.status }}
-      evaluation_results:
-        description: 'Summary of evaluation results'
-        value: ${{ jobs.evaluate.outputs.results }}
+  workflow_dispatch:  
 
 permissions:
   contents: read
@@ -29,89 +12,42 @@ jobs:
   evaluate:
     name: Run AI Foundry Evaluations
     runs-on: ubuntu-latest
-    outputs:
-      status: ${{ steps.evaluation.outputs.status }}
-      results: ${{ steps.evaluation.outputs.results }}
-    
+    env: 
+      GENAI_EVALS_CONFIG_PATH: ${{ github.workspace }}/evaluate-config.json 
+      GENAI_EVALS_DATA_PATH: ${{ github.workspace }}/.github/.test_files/eval-input.json
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install azure-ai-ml azure-identity
-          echo "Dependencies installed successfully"
-
-      - name: Azure CLI Login
+      - name: Azure Login
         uses: azure/login@v1
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Run Dummy Evaluation
-        id: evaluation
+      - name: Write evaluate config
         run: |
-          echo "🚀 Starting AI Foundry Evaluations..."
-          echo "Environment: ${{ inputs.environment }}"
-          echo "Project: ${{ inputs.project-name }}"
-          
-          # Simulate evaluation process
-          echo "📊 Running evaluation tests..."
-          sleep 5
-          
-          echo "✅ Model accuracy test: PASSED (95.2%)"
-          echo "✅ Response time test: PASSED (avg 1.2s)"
-          echo "✅ Safety evaluation: PASSED"
-          echo "✅ Bias detection: PASSED"
-          
-          # Set outputs
-          echo "status=success" >> $GITHUB_OUTPUT
-          echo "results=4/4 tests passed - Model ready for deployment" >> $GITHUB_OUTPUT
-          
-          echo "🎉 Evaluation completed successfully!"
-
-      - name: Generate Evaluation Report
-        run: |
-          echo "📋 Generating evaluation report..."
-          cat << EOF > evaluation-report.md
-          # AI Foundry Evaluation Report
-          
-          **Date**: $(date)
-          **Environment**: ${{ inputs.environment }}
-          **Project**: ${{ inputs.project-name }}
-          
-          ## Test Results
-          
-          | Test Category | Status | Score |
-          |---------------|--------|-------|
-          | Model Accuracy | ✅ PASSED | 95.2% |
-          | Response Time | ✅ PASSED | 1.2s avg |
-          | Safety Evaluation | ✅ PASSED | 100% |
-          | Bias Detection | ✅ PASSED | 100% |
-          
-          ## Summary
-          
-          All evaluation tests passed successfully. The AI model is ready for production deployment.
-          
-          ## Recommendations
-          
-          - Monitor response times in production
-          - Schedule regular bias evaluations
-          - Continue safety monitoring
+          cat > ${{ env.GENAI_EVALS_CONFIG_PATH }} <<EOF
+          {
+            "data": "${{ env.GENAI_EVALS_DATA_PATH }}",
+            "evaluators": {
+              "coherence": "CoherenceEvaluator",
+              "fluency": "FluencyEvaluator",
+              "violence": "ViolenceEvaluator",
+              "hateunfairness": "HateUnfairnessEvaluator"
+            },
+            "ai_model_configuration": {
+              "type": "azure_openai",
+              "azure_endpoint": "${{ secrets.AZURE_OPENAI_ENDPOINT }}",
+              "azure_deployment": "${{ secrets.AZURE_OPENAI_CHAT_DEPLOYMENT }}",
+              "api_key": "${{ secrets.AZURE_OPENAI_API_KEY }}",
+              "api_version": "${{ secrets.AZURE_OPENAI_API_VERSION }}"
+            }
+          }
           EOF
-          
-          echo "📄 Report generated: evaluation-report.md"
-
-      - name: Upload Evaluation Report
-        uses: actions/upload-artifact@v3
+      - name: Run AI Evaluation
+        id: run-ai-evaluation
+        uses: microsoft/genai-evals@main
         with:
-          name: evaluation-report-${{ github.run_number }}
-          path: evaluation-report.md
-          retention-days: 30
+          evaluate-configuration: ${{ env.GENAI_EVALS_CONFIG_PATH }}
