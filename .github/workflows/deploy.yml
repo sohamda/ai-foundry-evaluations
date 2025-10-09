@@ -34,6 +34,8 @@ jobs:
       uses: azure/cli@v2
       with:
         azcli-version: latest
+        inlineScript: |
+          az account show
 
     - name: Validate Bicep files
       run: |
