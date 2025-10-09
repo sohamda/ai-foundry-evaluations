@@ -57,13 +57,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Azure CLI
-        uses: azure/cli@v1
-        with:
-          azcliversion: latest
-          inlineScript: |
-            az account show
-
       - name: Azure Login
         uses: azure/login@v2
         with:
@@ -71,6 +64,13 @@ jobs:
           tenant-id: ${{ env.AZURE_TENANT_ID }}
           subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
 
+      - name: Setup Azure CLI
+        uses: azure/cli@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az account show
+            
       - name: Set deployment variables
         run: |
           echo "RESOURCE_GROUP_NAME=rg-ai-foundry-eval" >> $GITHUB_ENV
