@@ -38,7 +38,7 @@ jobs:
           az account show
 
       - name: Run evaluation
-        uses: microsoft/ai-agent-eval@v1
+        uses: microsoft/ai-agent-evals@v2-beta
         with:
           azure-ai-project-endpoint: ${{ env.AZURE_AI_PROJECT_ENDPOINT }}
           deployment-name: ${{ env.AZURE_OPENAI_CHAT_DEPLOYMENT }}
