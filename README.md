@@ -74,6 +74,7 @@ Azure infra is a copy of [Standard Agent Setup](https://github.com/azure-ai-foun
    - `AZURE_OPENAI_API_VERSION` - AOAI API version
    - `AZURE_OPENAI_CHAT_DEPLOYMENT` - AOAI deployment name
    - `AZURE_OPENAI_ENDPOINT` - AOAI endpoint
+   - `FOUNDRY_PROJECT_ENDPOINT` - Azure foundry Project endpoint
 
 3. **Push changes** to the `main` branch or manually trigger the workflow
 
