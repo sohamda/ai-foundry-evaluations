@@ -1,4 +1,4 @@
-name: AI Foundry Evaluator
+name: AI Foundry Model Evaluator
 
 on:
   workflow_call:
@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   evaluate:
-    name: Run AI Foundry Evaluations
+    name: Run AI Foundry Model Evaluations
     runs-on: ubuntu-latest
     env: 
       GENAI_EVALS_CONFIG_PATH: ${{ github.workspace }}/evaluate-config.json 
@@ -44,8 +44,8 @@ jobs:
             }
           }
           EOF
-      - name: Run AI Evaluation
-        id: run-ai-evaluation
+      - name: Run Model Evaluation
+        id: run-model-evaluation
         uses: microsoft/genai-evals@main
         with:
           evaluate-configuration: ${{ env.GENAI_EVALS_CONFIG_PATH }}

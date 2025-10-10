@@ -37,3 +37,4 @@ override.tf.json
 terraform.rc
 .github/credential.json
 .github/github-secrets
+agents/.env

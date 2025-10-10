@@ -1,0 +1,47 @@
+name: AI Agent Evaluation
+
+on:
+  workflow_call:
+  workflow_dispatch:  
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+  AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+  AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  DATA_PATH: "${{ github.workspace }}/.github/.test_files/agent-eval.json"
+  AGENT_ID: ${{ secrets.AGENT_ID }}
+  AZURE_OPENAI_CHAT_DEPLOYMENT: ${{ secrets.AZURE_OPENAI_CHAT_DEPLOYMENT }}
+  AZURE_AI_PROJECT_ENDPOINT: ${{ secrets.FOUNDRY_PROJECT_ENDPOINT }}
+
+jobs:
+  create-math-agent:
+    name: Create Math Agent
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ env.AZURE_CLIENT_ID }}
+          tenant-id: ${{ env.AZURE_TENANT_ID }}
+          subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Verify Azure authentication
+        run: |
+          az account show
+
+      - name: Run evaluation
+        uses: microsoft/ai-agent-eval@v2-beta
+        with:
+          azure-ai-project-endpoint: ${{ env.AZURE_AI_PROJECT_ENDPOINT }}
+          deployment-name: ${{ env.AZURE_OPENAI_CHAT_DEPLOYMENT }}
+          data-path: ${{ env.DATA_PATH }}
+          agent-ids: ${{ env.AGENT_ID }}
+
