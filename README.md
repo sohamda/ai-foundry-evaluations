@@ -75,11 +75,17 @@ Azure infra is a copy of [Standard Agent Setup](https://github.com/azure-ai-foun
    - `AZURE_OPENAI_CHAT_DEPLOYMENT` - AOAI deployment name
    - `AZURE_OPENAI_ENDPOINT` - AOAI endpoint
    - `FOUNDRY_PROJECT_ENDPOINT` - Azure foundry Project endpoint
+   - `AGENT_ID` - Azure foundry Agent ID
 
 3. **Push changes** to the `main` branch or manually trigger the workflow
 
 4. **Monitor deployment** in the Actions tab of your GitHub repository
 
+## 🚀 Create Agent
+
+Create `.env` file then `pip install` and then `python math_agent.py`
+
+Copy the agent id from Azure AI Foundry portal and add it to Github Secrets.
 
 ## 📁 Project Structure
 
@@ -87,6 +93,8 @@ Azure infra is a copy of [Standard Agent Setup](https://github.com/azure-ai-foun
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml          # GitHub Actions workflow
+├── agents/
+│   ├── math_agent.py              # Math agent creation
 ├── infra/
 │   ├── modules/
 │   │   └── xxxxx
