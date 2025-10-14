@@ -33,9 +33,7 @@ jobs:
             "data": "${{ env.GENAI_EVALS_DATA_PATH }}",
             "evaluators": {
               "coherence": "CoherenceEvaluator",
-              "fluency": "FluencyEvaluator",
-              "violence": "ViolenceEvaluator",
-              "hate_unfairness": "HateUnfairnessEvaluator"
+              "fluency": "FluencyEvaluator"
             },
             "ai_model_configuration": {
               "type": "azure_openai",
