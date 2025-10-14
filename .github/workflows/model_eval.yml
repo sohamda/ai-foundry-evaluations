@@ -43,6 +43,11 @@ jobs:
               "azure_deployment": "${{ secrets.AZURE_OPENAI_CHAT_DEPLOYMENT }}",
               "api_key": "${{ secrets.AZURE_OPENAI_API_KEY }}",
               "api_version": "${{ secrets.AZURE_OPENAI_API_VERSION }}"
+            },
+            "azure_ai_project": {
+              "subscription_id": "${{ secrets.AZURE_SUBSCRIPTION_ID }}",
+              "resource_group": "${{ secrets.AZURE_RESOURCE_GROUP }}",
+              "project_name": "${{ secrets.AZURE_AI_PROJECT_NAME }}"
             }
           }
           EOF
