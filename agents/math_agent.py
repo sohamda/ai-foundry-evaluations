@@ -1,11 +1,11 @@
 import os
 from pathlib import Path
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 from azure.ai.projects import AIProjectClient
 from azure.identity import DefaultAzureCredential
 from azure.ai.agents.models import CodeInterpreterTool
 
-load_dotenv('.env')
+#load_dotenv('.env')
 
 # Create an AIProjectClient from an endpoint, copied from your Azure AI Foundry project.
 # You need to login to Azure subscription via Azure CLI and set the environment variables
