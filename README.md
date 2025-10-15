@@ -1,9 +1,14 @@
-# Azure AI Foundry Evaluations
+# Azure AI Foundry: Agentic DevOps
 
-This project demos the [Github actions for Evaluations](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/evaluation-github-action?tabs=foundry-project) of Azure AI Foundry models and Agents.
+This project demonstrates `Github workflow for AgenticDevOps` 
+1. Deploy Azure Infra
+2. Create Agent(s)
+3. Evaluate model(s)
+4. Evaluation Agent(s)
 
-### Check evaluation input samples 
+Uses [Github actions for Evaluations](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/evaluation-github-action?tabs=foundry-project) of Azure AI Foundry models and Agents.
 
+This project uses evaluation input samples from:
 1. [genai-evals](https://github.com/microsoft/genai-evals/blob/main/.github/.test_files/eval-input.jsonl)
 2. [ai-agents-eval](https://github.com/microsoft/ai-agent-evals/tree/main/samples/data)
 
@@ -20,7 +25,7 @@ Make sure
 # Service Principle for Github Actions
 Last checked: 15-10-2025 
 
-Using Managed Identity to run Agent Eval action didn't work. You need a Service Principle (atleast) to execute the "Create Agent" and "Agent Evaluation" workflows.
+Using Managed Identity to run Agent Eval action doesn't work. You need a Service Principle (atleast) to execute the "Create Agent" and "Agent Evaluation" workflows.
 
 [How to create Service Principle](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure-secret)
 
