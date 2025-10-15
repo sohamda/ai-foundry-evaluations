@@ -7,11 +7,6 @@ permissions:
   id-token: write
   contents: read
 
-env:
-  AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-  AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-  AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
 jobs:
   validate:
     name: Validate Bicep Templates
@@ -23,9 +18,7 @@ jobs:
     - name: Azure Login
       uses: azure/login@v2
       with:
-        client-id: ${{ env.AZURE_CLIENT_ID }}
-        tenant-id: ${{ env.AZURE_TENANT_ID }}
-        subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     - name: Setup Azure CLI
       uses: azure/cli@v2
@@ -55,9 +48,7 @@ jobs:
       - name: Azure Login
         uses: azure/login@v2
         with:
-          client-id: ${{ env.AZURE_CLIENT_ID }}
-          tenant-id: ${{ env.AZURE_TENANT_ID }}
-          subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Setup Azure CLI
         uses: azure/cli@v1
@@ -68,21 +59,20 @@ jobs:
 
       - name: Set deployment variables
         run: |
-          echo "RESOURCE_GROUP_NAME=rg-ai-foundry-eval" >> $GITHUB_ENV
           echo "LOCATION=swedencentral" >> $GITHUB_ENV
           echo "DEPLOYMENT_NAME=ai-foundry-deploy-$(date +%Y%m%d-%H%M%S)" >> $GITHUB_ENV
 
       - name: Create Resource Group
         run: |
           # Check if the resource group exists
-          az group show --name ${{ env.RESOURCE_GROUP_NAME }} || \
+          az group show --name ${{ secrets.AZURE_RESOURCE_GROUP }} || \
           # Create the resource group if it doesn't exist
-          az group create --name ${{ env.RESOURCE_GROUP_NAME }} --location ${{ env.LOCATION }}
+          az group create --name ${{ secrets.AZURE_RESOURCE_GROUP }} --location ${{ env.LOCATION }}
 
       - name: Deploy Bicep template
         uses: azure/arm-deploy@v1
         with:
-          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
-          resourceGroupName: ${{ env.RESOURCE_GROUP_NAME }}
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          resourceGroupName: ${{ secrets.AZURE_RESOURCE_GROUP }}
           template: infra/main.bicep
           deploymentName: ${{ env.DEPLOYMENT_NAME }}
