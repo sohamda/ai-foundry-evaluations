@@ -1,6 +1,6 @@
-# Azure AI Foundry: Agentic DevOps
+# Azure AI Foundry: GenAIOps
 
-This project demonstrates `Github workflow for AgenticDevOps` 
+This project demonstrates `Github workflow for GenAIOps` 
 1. Deploy Azure Infra
 2. Create Agent(s)
 3. Evaluate model(s)
