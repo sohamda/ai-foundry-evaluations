@@ -9,7 +9,7 @@ permissions:
   id-token: write
 
 env:
-  DATA_PATH: "${{ github.workspace }}/.github/.test_files/agent-eval-small.json"
+  DATA_PATH: "${{ github.workspace }}/.github/.test_files/agent-eval.json"
 
 jobs:
   create-math-agent:
