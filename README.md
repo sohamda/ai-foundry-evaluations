@@ -2,6 +2,11 @@
 
 This project demos the [Github actions for Evaluations](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/evaluation-github-action?tabs=foundry-project) of Azure AI Foundry models and Agents.
 
+### Check evaluation input samples 
+
+1. [genai-evals](https://github.com/microsoft/genai-evals/blob/main/.github/.test_files/eval-input.jsonl)
+2. [ai-agents-eval](https://github.com/microsoft/ai-agent-evals/tree/main/samples/data)
+
 # Infra
 Azure infra is a copy of [Standard Agent Setup](https://github.com/azure-ai-foundry/foundry-samples/blob/main/samples/microsoft/infrastructure-setup/41-standard-agent-setup/README.md)
 
@@ -10,6 +15,7 @@ Make sure
 1. Public Network access is enabled for Storage and CosmosDB resources. 
 2. The Storage, Cosmos, AI Search are connected resources for your Foundry project.
 3. You have "Storage Blob Data Contributor" role assigned. 
+4. For gpt-4o deployment you need enough TPM to run the evaluations, otherqwise you'll see throttling errors. For example, I have 1K TPM.
 
 # Service Principle for Github Actions
 Last checked: 15-10-2025 
