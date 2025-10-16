@@ -27,6 +27,8 @@ Last checked: 15-10-2025
 
 Using Managed Identity to run Agent Eval action doesn't work. You need a Service Principle (atleast) to execute the "Create Agent" and "Agent Evaluation" workflows.
 
+Roles needed for SP: Contributor (for deploy), AI User & Blob Contributor (for evaluation)
+
 [How to create Service Principle](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure-secret)
 
 ## 🚀 How to Start
