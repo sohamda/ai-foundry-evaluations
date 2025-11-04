@@ -9,7 +9,7 @@ permissions:
   id-token: write
 
 env:
-  DATA_PATH: "${{ github.workspace }}/.github/.test_files/agent-eval.json"
+  DATA_PATH: "${{ github.workspace }}/.github/.test_files/agent-eval-small.json"
 
 jobs:
   create-math-agent:
@@ -36,4 +36,5 @@ jobs:
           deployment-name: ${{ secrets.AZURE_OPENAI_CHAT_DEPLOYMENT }}
           data-path: ${{ env.DATA_PATH }}
           agent-ids: ${{ secrets.AGENT_ID }}
+          baseline-agent-id: ${{ secrets.AGENT_ID }}
 
