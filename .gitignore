@@ -38,3 +38,6 @@ terraform.rc
 .github/credential.json
 .github/github-secrets
 agents/.env
+evals/model/.env
+evals/model/.archive/** 
+evals/model/__pycache__/**
