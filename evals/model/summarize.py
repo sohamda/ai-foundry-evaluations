@@ -1,3 +1,6 @@
+
+## This code is inspired from https://github.com/microsoft/genai-evals/blob/main/src/ai_evaluate_action/summarize.py
+
 import json
 from pathlib import Path
 from statistics import mean
