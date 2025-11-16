@@ -6,9 +6,9 @@
 
 | Evaluator | |
 | :-------- | ---:|
-| coherence | 3.9047619047619047 
-| relevance | 4.523809523809524 
-| intent_resolution | 4.761904761904762 
+| coherence | 3.9523809523809526 
+| relevance | 4.666666666666667 
+| intent_resolution | 4.809523809523809 
 
 
 # Individual test scores
@@ -28,7 +28,7 @@
 | :-------- |  ---: |
 | coherence | 4.0 |
 | relevance | 5.0 |
-| intent_resolution | 4.0 |
+| intent_resolution | 5.0 |
 
 
 
@@ -153,8 +153,8 @@ Sources:
 
 | Evaluator | |
 | :-------- |  ---: |
-| coherence | 2.0 |
-| relevance | 2.0 |
+| coherence | 3.0 |
+| relevance | 3.0 |
 | intent_resolution | 2.0 |
 
 
@@ -298,7 +298,7 @@ Paris is the capital of France.
 | Evaluator | |
 | :-------- |  ---: |
 | coherence | 4.0 |
-| relevance | 5.0 |
+| relevance | 4.0 |
 | intent_resolution | 5.0 |
 
 
@@ -328,7 +328,7 @@ Jupiter is the largest planet in our solar system.
 | Evaluator | |
 | :-------- |  ---: |
 | coherence | 4.0 |
-| relevance | 4.0 |
+| relevance | 5.0 |
 | intent_resolution | 5.0 |
 
 
@@ -568,7 +568,7 @@ Satya Nadella is the CEO of Microsoft.
 | Evaluator | |
 | :-------- |  ---: |
 | coherence | 4.0 |
-| relevance | 4.0 |
+| relevance | 5.0 |
 | intent_resolution | 5.0 |
 
 
@@ -628,7 +628,7 @@ The freezing point of water is 0°C.
 | Evaluator | |
 | :-------- |  ---: |
 | coherence | 4.0 |
-| relevance | 4.0 |
+| relevance | 5.0 |
 | intent_resolution | 5.0 |
 
 

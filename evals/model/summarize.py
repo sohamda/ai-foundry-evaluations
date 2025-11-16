@@ -8,7 +8,7 @@ from typing import Any, TypeAlias, TypedDict
 
 from jinja2 import Environment, FileSystemLoader
 from pydantic import BaseModel
-
+from archive_results import save_to_archive
 
 class Results(BaseModel):
     rows: list[dict[str, Any]]
@@ -58,13 +58,27 @@ def template_parameters(parsed_results: ParsedResults) -> dict[str, Any]:
                 aggregated_eval_scores.setdefault(evaluator_name, []).append(row["eval_scores"][evaluator_name]
                 )
 
-    return {
+    template_params = {
         "tests": tests,
         "average_eval_scores": {
             evaluator_name: mean(v) for evaluator_name, v in aggregated_eval_scores.items()
         },
         "evaluator_names": list(parsed_results.rows[0]["outputs"].keys()),
     }
+    
+    # Create a JSON-serializable version for archiving
+    serializable_params = {
+        "tests": {
+            f"{query} | {ground_truth}": [dict(row) for row in rows]
+            for (query, ground_truth), rows in tests.items()
+        },
+        "average_eval_scores": template_params["average_eval_scores"],
+        "evaluator_names": template_params["evaluator_names"],
+    }
+    
+    save_to_archive(serializable_params, "template_parameters")
+    
+    return template_params
 
 
 def summarize_results(results: dict, summary_path: Path, *, show_raw_output: bool = True) -> None:
